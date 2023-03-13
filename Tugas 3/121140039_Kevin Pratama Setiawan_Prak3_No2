@@ -1,0 +1,22 @@
+class Angka :
+    def __init__(self):
+        # Public Attributes
+        self.a = 2
+        # Protected Attributes
+        self._b = 3
+        # Private Attributes
+        self.__c = 4
+
+
+Angka1 = Angka()
+
+print("Public Attributes bisa diakses didalam maupun didalam class Angka.")
+print(f"Print Public Attributes : {Angka1.a}")
+print()
+
+print("Protected Attributes hanya bisa diakses di dalam class Angka, walaupun sebenarnya bisa diakses dan di modifikasi di luar class Angka dan derived class tapi secara etika pemrograman sebisa mungkin untuk tidak mengaksesnya diluar class(source : Although the protected variable can be accessed out of the class as well as in the derived class (modified too in derived class), it is customary(convention not a rule) to not access the protected out the class body. (https://www.geeksforgeeks.org/encapsulation-in-python/)). seperti yang ada dibawah.")
+print (f"Print Protected Attributes : {Angka1._b}")
+print()
+
+print("Akan muncul error karena Private Attributes hanya bisa diakses di dalam class Angka dan tidak bisa diluar class Angka.")
+print(f"Print Private Attributes : {Angka1.__c}")
