@@ -1,0 +1,144 @@
+class Robot:
+    jumlah_turn = 0
+    
+    def __init__(self, nama, health, damage):
+        self.nama = nama
+        self.health = health
+        self.damage = damage
+
+    def lakukan_aksi(self, lawan):
+        lawan.health -= self.damage
+        self.jumlah_turn += 1
+
+class Antares(Robot):
+    def __init__(self):
+        super().__init__(nama ="Antares", health =50000, damage =5000)
+
+    def lakukan_aksi(self, lawan):
+        self.jumlah_turn += 1
+        lawan.jumlah_turn += 1
+        if self.jumlah_turn % 3 == 0 :
+            lawan.health -= self.damage*1.5
+            print(f"Robot ({self.nama}) menyerang sebanyak {self.damage*1.5} DMG")
+            if lawan.health < 0:
+                lawan.health = 0
+        else:  
+            lawan.health -= self.damage
+            print(f"Robot ({self.nama}) menyerang sebanyak {self.damage} DMG")
+            if lawan.health < 0:
+                lawan.health = 0
+        
+class Alphasetia(Robot):
+    def __init__(self):
+        super().__init__(nama ="Alphasetia", health =40000, damage =6000)
+
+    def lakukan_aksi(self, lawan):
+        self.jumlah_turn += 1
+        lawan.jumlah_turn += 1
+        if self.jumlah_turn % 2 == 0 :
+            lawan.health -= self.damage
+            print(f"Robot ({self.nama}) menyerang sebanyak {self.damage} DMG")
+            if lawan.health < 0:
+                lawan.health = 0
+            self.health += 4000
+            print(f"Robot ({self.nama}) menambah darah sebanyak 4000 HP")
+        else : 
+            lawan.health -= self.damage
+            print(f"Robot ({self.nama}) menyerang sebanyak {self.damage} DMG")
+            if lawan.health < 0:
+                lawan.health = 0
+
+class Lecalicus(Robot):
+    def __init__(self):
+        super().__init__(nama ="Lecalicus", health =45000, damage =5500)
+
+    def lakukan_aksi(self, lawan):
+        self.jumlah_turn += 1
+        lawan.jumlah_turn += 1
+        if self.jumlah_turn % 4 == 0 :
+            self.health += 7000
+            print(f"Robot ({self.nama}) menambah darah sebanyak 7000 HP")
+            lawan.health -= self.damage * 2
+            print(f"Robot ({self.nama}) menyerang sebanyak {self.damage*2} DMG")
+            if lawan.health < 0:
+                lawan.health = 0
+        else :    
+            lawan.health -= self.damage
+            print(f"Robot ({self.nama}) menyerang sebanyak {self.damage} DMG")
+            if lawan.health < 0:
+                lawan.health = 0
+
+print("Selamat datang di pertandingan robot Yamako")
+n = input("Pilih robotmu (1 = Antares, 2 = Alphasetia, 3 = Lecalicus): ")
+if n=="1":
+    a = Antares()
+elif n=="2":
+    a = Alphasetia()
+elif n=="3":
+    a = Lecalicus()
+    
+m = input("Pilih robot lawan (1 = Antares, 2 = Alphasetia, 3 = Lecalicus): ")
+if m=="1":
+    b = Antares()
+elif m=="2":
+    b = Alphasetia()
+elif m=="3":
+    b = Lecalicus()
+    
+print("Selanjutnya, pilih 1 untuk batu, 2 untuk kertas, dan 3 untuk gunting")
+print("")
+
+while a.health != 0 and b.health != 0:
+    print("-"*50)
+    print(f"Turn saat ini : {a.jumlah_turn+1}")
+    print(f"Robotmu ({a.nama} - {a.health} HP), robot lawan ({b.nama} - {b.health} HP)")
+    n = int(input(f"Pilih tangan robotmu ({a.nama}): "))
+    m = int(input(f"Pilih tangan robot lawan ({b.nama}): "))
+
+    print("")
+    
+    if n == 1:
+        if m == 1:
+            status = "draw"
+        elif m == 2:
+            status = "lose"
+        elif m == 3:
+            status = "win"
+        else :
+            print("Input invalid !")
+    elif n == 2:
+        if m == 1:
+            status = "win"
+        elif m == 2:
+            status = "draw"
+        elif m == 3:
+            status = "lose"
+        else :
+            print("Input invalid !")
+    elif n == 3:
+        if m == 1:
+            status = "lose"
+        elif m == 2:
+            status = "win"
+        elif m == 3:
+            status = "draw"
+        else :
+            print("Input invalid !")
+    else :
+        print("Input invalid !")
+
+    if status=="win":
+        print("Robotmu menang !")
+        a.lakukan_aksi(b)
+    elif status=="lose":
+        print("Robot lawan menang !")
+        b.lakukan_aksi(a)
+    elif status=="draw":
+        print("Draw")
+
+    print("")
+    
+    if a.health == 0:
+        print(f"Robot lawan ({b.nama}) menang !")
+    elif b.health == 0 :
+        print(f"Robotmu ({a.nama}) menang !")
